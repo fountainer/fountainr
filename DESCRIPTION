@@ -1,0 +1,10 @@
+Package: fountainr
+Type: Package
+Title: Functions used for myself
+Version: 0.1
+Date: 2015-10-25
+Author: Fangquan Shi
+Maintainer: Who to complain to <540235317@qq.com>
+Description: Learning how to write a package. Functions used for myself.
+License: MIT
+LazyData: TRUE
