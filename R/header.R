@@ -1,5 +1,5 @@
-make_header <- function() {
-  num_hash_3 <- 0L
+make_header <- function(n = 1) {
+  num_hash_3 <- (n - 1)L
   num_hash_4 <- 0L
   num_hash_5 <- 0L
   header <- function(n) {
