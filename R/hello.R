@@ -16,10 +16,10 @@
 
 #' Title
 #'
-#' @return
-#' @export
+#' @return print hello
 #'
-#' @examples
+#'
+#' @export
 hello <- function() {
   print("Hello, world!")
 }

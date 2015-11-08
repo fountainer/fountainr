@@ -1,5 +1,20 @@
+#' Automatically number headers in markdown file
+#'
+#' Returns a function that can automatically number headers. Only support header 3, 4, 5.
+#'
+#' @param n The number of the first header 3.Default 1.
+#'
+#' @return A function with a integer parameter(3, 4, 5) that can automatically number headers
+#' @export
+#'
+#' @examples
+#' h <- make_header()
+#' # write in rmarkdown
+#' `r h(3)` H3
+#'
+#' `r h(4)` H4
 make_header <- function(n = 1) {
-  num_hash_3 <- (n - 1)L
+  num_hash_3 <- n - 1
   num_hash_4 <- 0L
   num_hash_5 <- 0L
   header <- function(n) {
