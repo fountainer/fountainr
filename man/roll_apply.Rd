@@ -4,7 +4,7 @@
 \alias{roll_apply}
 \title{Rolling apply a function on a data frame or matrix.}
 \usage{
-roll_apply(x, n, fun, ...)
+roll_apply(x, n, fun, ..., SIMPLIFY = TRUE)
 }
 \arguments{
 \item{x}{A data frame or a matrix.}
@@ -14,9 +14,11 @@ roll_apply(x, n, fun, ...)
 \item{fun}{A function whose first parameter is the \code{x}.}
 
 \item{...}{Additional parameter passed to \code{fun}}
+
+\item{SIMPLIFY}{Attempt to return a data frame if \code{fun} returns a vector or a list whose elements are vectors with length 1.}
 }
 \value{
-A list containing the rolling results
+A data frame or list containing the rolling results. See \code{SIMPLIFY}
 }
 \description{
 Rolling apply a function on a data frame or matrix.
