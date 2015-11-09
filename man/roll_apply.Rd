@@ -2,7 +2,7 @@
 % Please edit documentation in R/rollapply.R
 \name{roll_apply}
 \alias{roll_apply}
-\title{Title}
+\title{Rolling apply a function on a data frame or matrix.}
 \usage{
 roll_apply(x, n, fun, ...)
 }
@@ -19,7 +19,7 @@ roll_apply(x, n, fun, ...)
 A list containing the rolling results
 }
 \description{
-Title
+Rolling apply a function on a data frame or matrix.
 }
 \examples{
 m <- matrix(1:10, ncol = 2)
