@@ -3,4 +3,4 @@
 export(hello)
 export(make_header)
 export(roll_apply)
-export(write_csv)
+export(write_table)
