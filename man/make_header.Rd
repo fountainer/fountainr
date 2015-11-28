@@ -10,7 +10,7 @@ make_header(n = 1)
 \item{n}{The number of the first header 3.Default 1.}
 }
 \value{
-A function with a integer parameter(3, 4, 5) that can automatically number headers
+A function with a integer parameter(3, 4, 5, 6) that can automatically number headers
 }
 \description{
 Returns a function that can automatically number headers. Only support header 3, 4, 5.
