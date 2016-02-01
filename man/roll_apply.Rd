@@ -4,7 +4,7 @@
 \alias{roll_apply}
 \title{Rolling apply a function on a data frame or matrix.}
 \usage{
-roll_apply(x, n, fun, ..., SIMPLIFY = TRUE)
+roll_apply(x, n, fun, ..., SIMPLIFY = FALSE)
 }
 \arguments{
 \item{x}{A data frame or a matrix.}
