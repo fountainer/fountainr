@@ -13,7 +13,7 @@
 #' @examples
 #' m <- matrix(1:10, ncol = 2)
 #' roll_apply(m, 4, colMeans)
-roll_apply <- function(x, n, fun, ..., SIMPLIFY = TRUE) {
+roll_apply <- function(x, n, fun, ..., SIMPLIFY = FALSE) {
   fun <- match.fun(fun)
   n_row <- nrow(x)
   if (n_row < n ) {
