@@ -4,7 +4,7 @@
 \alias{roll_apply}
 \title{Rolling apply a function on a data frame or matrix.}
 \usage{
-roll_apply(x, n, fun, ..., SIMPLIFY = FALSE)
+roll_apply(x, n, fun, ..., progress = "none", SIMPLIFY = FALSE)
 }
 \arguments{
 \item{x}{A data frame or a matrix.}
@@ -14,6 +14,8 @@ roll_apply(x, n, fun, ..., SIMPLIFY = FALSE)
 \item{fun}{A function whose first parameter is the \code{x}.}
 
 \item{...}{Additional parameter passed to \code{fun}}
+
+\item{progress}{Create a progress bar("none", "txt", "tk", "win", "timer")}
 
 \item{SIMPLIFY}{Attempt to return a data frame if \code{fun} returns a vector or a list whose elements are vectors with length 1.}
 }
