@@ -10,7 +10,7 @@
 #' @param .packages character vector of packages that tasks depends on.
 #' @return  A list of result.
 #' @export
-#' @importFrom foreach foreach
+#' @importFrom foreach foreach %do% %dopar%
 #' @importFrom parallel detectCores clusterExport makeCluster stopCluster
 #' @importFrom doParallel registerDoParallel
 #' @examples
