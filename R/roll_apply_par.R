@@ -11,7 +11,7 @@
 #' @return  A list of result.
 #' @export
 #' @importFrom foreach foreach
-#' @importFrom parallel dectectCores clusterExport makeCluster stopCluster
+#' @importFrom parallel detectCores clusterExport makeCluster stopCluster
 #' @importFrom doParallel registerDoParallel
 #' @examples
 #' res <- roll_apply_par(seq(10^3), 100, sqrt, parallel = TRUE)
