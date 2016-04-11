@@ -3,7 +3,10 @@ Type: Package
 Title: Functions used for myself
 Version: 0.1
 Imports: 
-  pbapply
+  pbapply,
+  foreach,
+  parallel,
+  doParallel
 Date: 2015-10-25
 Author: Fangquan Shi
 Maintainer: Who to complain to <540235317@qq.com>
