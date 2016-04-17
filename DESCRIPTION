@@ -6,7 +6,8 @@ Imports:
   pbapply,
   foreach,
   parallel,
-  doParallel
+  doParallel,
+  tcltk
 Date: 2015-10-25
 Author: Fangquan Shi
 Maintainer: Who to complain to <540235317@qq.com>

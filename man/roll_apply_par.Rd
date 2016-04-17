@@ -5,7 +5,7 @@
 \title{Rolling apply a function on a data frame or matrix.}
 \usage{
 roll_apply_par(data, width, FUN, ..., parallel = FALSE, .export = NULL,
-  .packages = NULL)
+  .packages = NULL, progress = FALSE)
 }
 \arguments{
 \item{data}{A data frame or a matrix.}
@@ -22,6 +22,8 @@ parallel is the number of cores. If parallel is negative, the number of cores is
 \item{.export}{character vector of variables to export. Default is NULL.}
 
 \item{.packages}{character vector of packages that tasks depends on.}
+
+\item{progress}{Create a progress bar. Default FALSE.}
 }
 \value{
 A list of result.
@@ -30,6 +32,6 @@ A list of result.
 Rolling apply a function on a data frame or matrix.
 }
 \examples{
-res <- roll_apply_par(seq(10^3), 100, sqrt, parallel = TRUE)
+res <- roll_apply_par(matrix(seq(10^4 * 3), ncol = 3), 100, function(m) eigen(cov(m))$values, parallel = TRUE, progress = TRUE)
 }
 
