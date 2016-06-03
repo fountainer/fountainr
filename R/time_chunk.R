@@ -13,7 +13,8 @@ time_chunk <- function() {
     if (before) { 
       now <<- Sys.time() 
     } else {
-      paste("Chunk rendering time:", round(Sys.time() - now, digits = 3))
+      time_diff <- Sys.time() - now
+      paste("Chunk rendering time:", round(time_diff, digits = 2), units(time_diff))
     }
   }
   return(timeit)
