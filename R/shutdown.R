@@ -5,5 +5,5 @@
 #' 
 #' @examples shutdown(10)
 shutdown <- function(times) {
-  system(paste0("shutdown -s -t", times))
+  system(paste("shutdown -s -t", times))
 }
