@@ -4,29 +4,34 @@
 \alias{roll_apply}
 \title{Rolling apply a function on a data frame or matrix.}
 \usage{
-roll_apply(x, n, fun, ..., progress = "none", SIMPLIFY = FALSE)
+roll_apply(data, width, FUN, ..., parallel = FALSE, .export = NULL,
+  .packages = NULL, progress = FALSE)
 }
 \arguments{
-\item{x}{A data frame or a matrix.}
+\item{data}{A data frame or a matrix.}
 
-\item{n}{The rolling windown size.}
+\item{width}{The rolling window size.}
 
-\item{fun}{A function whose first parameter is the \code{x}.}
+\item{FUN}{function whose first parameter is the \code{data}.}
 
-\item{...}{Additional parameter passed to \code{fun}}
+\item{...}{Additional parameter passed to \code{FUN}}
 
-\item{progress}{Create a progress bar("none", "txt", "tk", "win", "timer")}
+\item{parallel}{parallel computing. Default is FALSE. If parallel is positive, 
+parallel is the number of cores. If parallel is negative, the number of cores is \code{detectCores() + parallel}}
 
-\item{SIMPLIFY}{Attempt to return a data frame if \code{fun} returns a vector or a list whose elements are vectors with length 1.}
+\item{.export}{character vector of variables to export. Default is NULL.}
+
+\item{.packages}{character vector of packages that tasks depends on.}
+
+\item{progress}{The name of the file that is written into progress information. Default FALSE.}
 }
 \value{
-A data frame or list containing the rolling results. See \code{SIMPLIFY}
+A list of result.
 }
 \description{
 Rolling apply a function on a data frame or matrix.
 }
 \examples{
-m <- matrix(1:10, ncol = 2)
-roll_apply(m, 4, colMeans)
+res <- roll_apply_par(matrix(seq(10^4 * 3), ncol = 3), 100, function(m) eigen(cov(m))$values, parallel = -1, progress = "progress.txt")
 }
 
