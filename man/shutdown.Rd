@@ -9,6 +9,9 @@ shutdown(times)
 \arguments{
 \item{times}{The times to shutdown the computer. Unit is second.}
 }
+\value{
+The time when the function is called
+}
 \description{
 Shutdown the computer.
 }
