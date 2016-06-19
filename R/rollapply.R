@@ -24,7 +24,16 @@ roll_apply <- function(data, width, FUN, ..., parallel = FALSE, .export = NULL, 
   }
   num_wins <- nobs - width + 1
   vec <- seq(num_wins)
-
+  progress_messages <- function(i, start_time) {
+    diff_time <- Sys.time() - start_time
+    time_unit <- units(diff_time)
+    perc_done <- round(i * 100 / num_wins, 2)
+    perc_todo <- 100 - perc_done
+    messages <- paste0(perc_done, "% done!")
+    messages <- paste(messages, diff_time, time_unit, "used! Expected", perc_todo / perc_done * diff_time, time_unit, "left")
+    return(messages)
+  }
+  # ugly structure
   if (parallel) {
     if (isTRUE(parallel)) {
       cores <- detectCores()
@@ -42,32 +51,41 @@ roll_apply <- function(data, width, FUN, ..., parallel = FALSE, .export = NULL, 
     } else {
       cl <- makeCluster(cores)
     }
+    # .export does not work?
     clusterExport(cl, .export)
     registerDoParallel(cl)
-    `%fun%` <- `%dopar%`
-  } else {
-    `%fun%` <- `%do%`
-  }
-  if (parallel && class(progress) == "character") {
-    start_time <- Sys.time()
-    res <- foreach(i = vec, .packages = .packages) %fun% {
-      FUN(data[i:(i + width - 1), ], ...)
-      diff_time <- Sys.time() - start_time
-      time_unit <- units(diff_time)
-      perc_done <- round(i * 100 / num_wins, 2)
-      perc_todo <- 100 - perc_done
-      message <- paste0(perc_done, "% done!")
-      message <- paste(message, diff_time, time_unit, "used! Expected", perc_todo / perc_done * diff_time, time_unit, "left")
-      writeLines(message)
+    
+    if (class(progress) == "character") {
+      start_time <- Sys.time()
+      res <- foreach(i = vec, .packages = .packages) %dopar% {
+        FUN(data[i:(i + width - 1), ], ...)
+        messages <- progress_messages(i, start_time)
+        writeLines(messages)
+      }
+    } else {
+      res <- foreach(i = vec, .packages = .packages) %dopar% FUN(data[i:(i + width - 1), ], ...)
     }
+
   } else {
-    res <- foreach(i = vec, .packages = .packages) %fun% FUN(data[i:(i + width - 1), ], ...)
+    if (class(progress) == "character") {
+      con <- file(progress, "w+")
+      start_time <- Sys.time()
+      res <- foreach(i = vec, .packages = .packages) %do% {
+        FUN(data[i:(i + width - 1), ], ...)
+        messages <- progress_messages(i, start_time)
+        writeLines(messages, con)
+      }
+      close(con)
+    } else {
+      res <- foreach(i = vec, .packages = .packages) %do% FUN(data[i:(i + width - 1), ], ...)
+    }
   }
+
   if (parallel) {
     stopCluster(cl)
-  }
+  } 
   return(res)
-} 
+}
 
 
 
