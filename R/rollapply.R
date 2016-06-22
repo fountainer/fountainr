@@ -33,6 +33,15 @@ roll_apply <- function(data, width, FUN, ..., parallel = FALSE, .export = NULL, 
     messages <- paste(messages, diff_time, time_unit, "used! Expected", perc_todo / perc_done * diff_time, time_unit, "left")
     return(messages)
   }
+  if (class(progress) == "character") {
+    if (!file.exists("progress")) {
+      dir.create("progress")
+    }
+    progress <- paste0("progress/", progress)
+    if (file.exists(progress)) {
+      file.remove(progress)
+    }
+  }
   # ugly structure
   if (parallel) {
     if (isTRUE(parallel)) {
@@ -47,7 +56,7 @@ roll_apply <- function(data, width, FUN, ..., parallel = FALSE, .export = NULL, 
       }
     }
     if (class(progress) == "character") {
-      cl <- makeCluster(cores, outfile = progress)
+      cl <- makeCluster(cores, outfile = file.path(progress))
     } else {
       cl <- makeCluster(cores)
     }
