@@ -3,6 +3,7 @@
 export(clean_bib)
 export(hello)
 export(list2df)
+export(louter)
 export(make_header)
 export(roll_apply)
 export(roll_apply_par)

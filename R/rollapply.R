@@ -2,8 +2,8 @@
 #' 
 #' @param data      A data frame or a matrix.
 #' @param width     The rolling window size.
-#' @param FUN       function whose first parameter is the \code{data}.
-#' @param ...       Additional parameter passed to \code{FUN}
+#' @param .fun       function whose first parameter is the \code{data}.
+#' @param ...       Additional parameter passed to \code{.fun}
 #' @param parallel  parallel computing. Default is FALSE. If parallel is positive, 
 #' parallel is the number of cores. If parallel is negative, the number of cores is \code{detectCores() + parallel}
 #' @param .export   character vector of variables to export. Default is NULL.
@@ -16,8 +16,9 @@
 #' @importFrom doParallel registerDoParallel
 #' @examples
 #' res <- roll_apply_par(matrix(seq(10^4 * 3), ncol = 3), 100, function(m) eigen(cov(m))$values, parallel = -1, progress = "progress.txt")
-roll_apply <- function(data, width, FUN, ..., parallel = FALSE, .export = NULL, .packages = NULL, progress = FALSE) {
-  FUN <- match.fun(FUN)
+roll_apply <- function(data, width, .fun, ..., parallel = FALSE, .export = NULL, 
+                       .packages = NULL, progress = FALSE) {
+  .fun <- match.fun(.fun)
   nobs <- nrow(data)
   if (nobs < width) {
     stop("The size of window is larger than row number of the data.")
@@ -30,7 +31,8 @@ roll_apply <- function(data, width, FUN, ..., parallel = FALSE, .export = NULL, 
     perc_done <- round(i * 100 / num_wins, 2)
     perc_todo <- 100 - perc_done
     messages <- paste0(perc_done, "% done!")
-    messages <- paste(messages, diff_time, time_unit, "used! Expected", perc_todo / perc_done * diff_time, time_unit, "left")
+    messages <- paste(messages, diff_time, time_unit, "used! Expected", 
+      perc_todo / perc_done * diff_time, time_unit, "left")
     return(messages)
   }
   if (class(progress) == "character") {
@@ -67,12 +69,14 @@ roll_apply <- function(data, width, FUN, ..., parallel = FALSE, .export = NULL, 
     if (class(progress) == "character") {
       start_time <- Sys.time()
       res <- foreach(i = vec, .packages = .packages) %dopar% {
-        FUN(data[i:(i + width - 1), ], ...)
+        .fun(data[i:(i + width - 1), ], ...)
         messages <- progress_messages(i, start_time)
         writeLines(messages)
       }
     } else {
-      res <- foreach(i = vec, .packages = .packages) %dopar% FUN(data[i:(i + width - 1), ], ...)
+      res <- foreach(i = vec, .packages = .packages) %dopar% {
+        .fun(data[i:(i + width - 1), ], ...)
+      }
     }
 
   } else {
@@ -80,13 +84,15 @@ roll_apply <- function(data, width, FUN, ..., parallel = FALSE, .export = NULL, 
       con <- file(progress, "w+")
       start_time <- Sys.time()
       res <- foreach(i = vec, .packages = .packages) %do% {
-        FUN(data[i:(i + width - 1), ], ...)
+        .fun(data[i:(i + width - 1), ], ...)
         messages <- progress_messages(i, start_time)
         writeLines(messages, con)
       }
       close(con)
     } else {
-      res <- foreach(i = vec, .packages = .packages) %do% FUN(data[i:(i + width - 1), ], ...)
+      res <- foreach(i = vec, .packages = .packages) %do% {
+        .fun(data[i:(i + width - 1), ], ...)
+      }
     }
   }
 
