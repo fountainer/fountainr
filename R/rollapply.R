@@ -15,7 +15,7 @@
 #' @importFrom parallel detectCores clusterExport makeCluster stopCluster
 #' @importFrom doParallel registerDoParallel
 #' @examples
-#' res <- roll_apply_par(matrix(seq(10^4 * 3), ncol = 3), 100, function(m) eigen(cov(m))$values, parallel = -1, progress = "progress.txt")
+#' res <- roll_apply(matrix(seq(10^4 * 3), ncol = 3), 100, function(m) eigen(cov(m))$values, parallel = -1, progress = "progress.txt")
 roll_apply <- function(data, width, .fun, ..., parallel = FALSE, .export = NULL, 
                        .packages = NULL, progress = FALSE) {
   .fun <- match.fun(.fun)
@@ -69,9 +69,9 @@ roll_apply <- function(data, width, .fun, ..., parallel = FALSE, .export = NULL,
     if (class(progress) == "character") {
       start_time <- Sys.time()
       res <- foreach(i = vec, .packages = .packages) %dopar% {
-        .fun(data[i:(i + width - 1), ], ...)
         messages <- progress_messages(i, start_time)
         writeLines(messages)
+        .fun(data[i:(i + width - 1), ], ...)
       }
     } else {
       res <- foreach(i = vec, .packages = .packages) %dopar% {
@@ -84,9 +84,9 @@ roll_apply <- function(data, width, .fun, ..., parallel = FALSE, .export = NULL,
       con <- file(progress, "w+")
       start_time <- Sys.time()
       res <- foreach(i = vec, .packages = .packages) %do% {
-        .fun(data[i:(i + width - 1), ], ...)
         messages <- progress_messages(i, start_time)
         writeLines(messages, con)
+        .fun(data[i:(i + width - 1), ], ...)
       }
       close(con)
     } else {
