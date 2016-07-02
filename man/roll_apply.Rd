@@ -4,7 +4,7 @@
 \alias{roll_apply}
 \title{Rolling apply a function on a data frame or matrix.}
 \usage{
-roll_apply(data, width, FUN, ..., parallel = FALSE, .export = NULL,
+roll_apply(data, width, .fun, ..., parallel = FALSE, .export = NULL,
   .packages = NULL, progress = FALSE)
 }
 \arguments{
@@ -12,9 +12,9 @@ roll_apply(data, width, FUN, ..., parallel = FALSE, .export = NULL,
 
 \item{width}{The rolling window size.}
 
-\item{FUN}{function whose first parameter is the \code{data}.}
+\item{.fun}{function whose first parameter is the \code{data}.}
 
-\item{...}{Additional parameter passed to \code{FUN}}
+\item{...}{Additional parameter passed to \code{.fun}}
 
 \item{parallel}{parallel computing. Default is FALSE. If parallel is positive, 
 parallel is the number of cores. If parallel is negative, the number of cores is \code{detectCores() + parallel}}
