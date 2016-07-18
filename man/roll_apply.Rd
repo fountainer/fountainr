@@ -32,6 +32,6 @@ A list of result.
 Rolling apply a function on a data frame or matrix.
 }
 \examples{
-res <- roll_apply_par(matrix(seq(10^4 * 3), ncol = 3), 100, function(m) eigen(cov(m))$values, parallel = -1, progress = "progress.txt")
+res <- roll_apply(matrix(seq(10^4 * 3), ncol = 3), 100, function(m) eigen(cov(m))$values, parallel = -1, progress = "progress.txt")
 }
 

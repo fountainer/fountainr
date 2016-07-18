@@ -7,7 +7,7 @@
 list2df(l, use.names = fill, fill = FALSE, idcol = NULL)
 }
 \arguments{
-\item{l}{A list constaining data.table, data.frame or list object or vector.}
+\item{l}{A list constaining data.table, data.frame, matrix or list object or vector.}
 
 \item{use.names}{If TRUE items will be bound by matching column names.}
 
