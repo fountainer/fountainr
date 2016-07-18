@@ -13,7 +13,7 @@
 list2df <- function(l, use.names = fill, fill = FALSE, idcol = NULL) {
   # deal with list that contains vectors
   to_list_df <- function(m) {
-    if (is.atomic(m)) {
+    if (is.atomic(m) && is.vector(m)) {
       res <- as.list(m)
     } else if (is.matrix(m)) {
       res <- as.data.frame(m)
