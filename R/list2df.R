@@ -12,7 +12,9 @@
 #' df <- list2df(list(w1 = list(a = 1, b = 2, c = 3), w2 = list(a = 4, b = 5, c = 6)))
 list2df <- function(l, use.names = fill, fill = FALSE, idcol = NULL) {
   # deal with list that contains vectors
-  l <- lapply(l, as.list)
+  l <- lapply(l, function(vec) if(is.atomic(vec)) as.list(vec))
+  # deal with list that contains matrices
+  l <- lapply(l, function(m) if(is.matrix(m)) as.data.frame(m))
   DT <- data.table::rbindlist(l, use.names = use.names, fill = fill, idcol = idcol)
   data.table::setDF(DT)
   return(DT)
