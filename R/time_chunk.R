@@ -14,7 +14,7 @@ time_chunk <- function() {
       now <<- Sys.time() 
     } else {
       time_diff <- Sys.time() - now
-      paste(round(time_diff, digits = 2), units(time_diff), " (", now, ",", Sys.time(), ")")
+      paste("\n", round(time_diff, digits = 2), units(time_diff), " (", now, ",", Sys.time(), ")")
     }
   }
   return(timeit)
